@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const connetToDb = require("./database/db");
 const path = require("path");
+const Music = require("./model/Music");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,6 +19,12 @@ app.get("/", (req, res) => {
 
 app.get("/admin", (req, res) => {
   res.render("admin")
+})
+
+app.post("/create", async (req, res) => {
+  const music = req.body; 
+  await Music.create(music); 
+  res.redirect("/")
 })
 
 app.listen(port, () =>
